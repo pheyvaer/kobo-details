@@ -1,0 +1,18 @@
+{
+  "name": "kobo-details",
+  "version": "0.0.1",
+  "description": "Get the name and price of a book on kobo.com",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "kobo-details": "bin/cli.js"
+  },
+  "author": "Pieter Heyvaert <pieter.heyvaert@ugent.be>",
+  "license": "MIT",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "commander": "^4.0.1"
+  }
+}
