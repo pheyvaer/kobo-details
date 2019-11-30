@@ -11,6 +11,7 @@ main();
 async function main() {
   program.option('-u, --url <url>', 'Kobo.com URL. Reuse this option for multiple URLs', collect, []);
   program.option('-f, --file <path>', 'File with one URL per line', processFile);
+  program.option('-s, --sort <order>', 'Order books either asc or desc (only for CSV)', 'asc');
   program.option('-c, --csv', 'Print as CSV');
   program.parse(process.argv);
 
@@ -31,7 +32,8 @@ async function main() {
     }
 
     if (program.csv) {
-      printAsCSV(results);
+      const order = program.sort || 'asc';
+      printAsCSV(results, order);
     } else {
       printAsJSON(results);
     }
@@ -54,7 +56,20 @@ function printAsJSON(books) {
   });
 }
 
-function printAsCSV(books) {
+function printAsCSV(books, order) {
+  books.sort((a, b) => {
+    a = parseFloat(a.offers.price.replace(',', '.'));
+    b = parseFloat(b.offers.price.replace(',', '.'));
+
+    if (a < b) {
+      return order === 'asc' ? -1 : 1;
+    } else if (a > b) {
+      return order === 'asc' ? 1 : -1;
+    } else {
+      return 0;
+    }
+  });
+
   console.log('name,price,url');
 
   books.forEach(book => {
