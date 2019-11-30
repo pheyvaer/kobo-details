@@ -28,7 +28,16 @@ function getBookDetails(url) {
         const name = $html('span.title.product-field').text().replace('\n', '');
         const price = $html('.active-price span.price').html().replace(' &#x20AC;', '');
 
-        resolve({name, price, url});
+        resolve({
+          '@context':'http://schema.org',
+          '@type': 'Book',
+          name,
+          offers: {
+            '@type': 'Offer',
+            price,
+            priceCurrency: "EUR"
+          },
+          url});
       });
     }).on('error', (e) => {
       reject(e);

@@ -58,7 +58,7 @@ function printAsCSV(books) {
   console.log('name,price,url');
 
   books.forEach(book => {
-    console.log(`"${book.name}","${book.price}","${book.url}"`);
+    console.log(`"${book.name}","${book.offers.price}","${book.url}"`);
   });
 }
 
